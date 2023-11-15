@@ -30,22 +30,27 @@ module.exports = {
         }
       );
       const data = await response.json();
-      const meals = data["mealServiceDietInfo"][1]["row"];
+      const meals = data?.mealServiceDietInfo?.[1]?.row;
 
-      const mealFields = meals.map((meal, index) => ({
-        name: meal["MMEAL_SC_NM"],
-        value: `${meal["DDISH_NM"]
-          .replace(/<br\/>/g, "")
-          .replace(/(\([0-9.]+\))/g, "")}`,
-      }));
-      const textEmbed = new EmbedBuilder()
-        .setColor("#0099ff")
-        .setTitle(
-          `${data["mealServiceDietInfo"][1]["row"][0]["SCHUL_NM"]}의 오늘의 급식입니다.`
-        )
-        .addFields(mealFields);
-      // .setFooter({ text: `${getToday()} 기준의 데이터 입니다.` });
-      interaction.reply({ embeds: [textEmbed] });
+      if (meals) {
+        const mealFields = meals.map((meal) => ({
+          name: meal["MMEAL_SC_NM"],
+          value: `${meal["DDISH_NM"]
+            .replace(/<br\/>/g, "")
+            .replace(/(\([0-9.]+\))/g, "")}`,
+        }));
+        const textEmbed = new EmbedBuilder()
+          .setColor("#0099ff")
+          .setTitle(
+            `${data["mealServiceDietInfo"][1]["row"][0]["SCHUL_NM"]}의 오늘의 급식입니다.`
+          )
+          .addFields(mealFields);
+        interaction.reply({ embeds: [textEmbed] });
+      } else {
+        await interaction.reply(
+          "급식 정보가 없습니다. 급식이 없는 날이거나, 급식 정보가 등록되지 않았습니다."
+        );
+      }
     } else {
       await interaction.reply(
         "학교 정보가 등록되지 않았습니다. /학교지정 명령어를 사용해주세요."

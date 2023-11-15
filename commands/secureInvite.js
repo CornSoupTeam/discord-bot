@@ -42,6 +42,13 @@ module.exports = {
       option
         .setName("역할")
         .setDescription("초대시 부여할 역할을 선택해주세요.")
+    )
+    .addStringOption((option) =>
+      option
+        .setName("통신사차단")
+        .setDescription(
+          "선택하신 통신사의 유저는 해당 초대 링크를 사용할 수 없도록 제한합니다."
+        )
     ),
   async execute(interaction) {
     await interaction.reply("아직 제작중인 기능입니다.");
