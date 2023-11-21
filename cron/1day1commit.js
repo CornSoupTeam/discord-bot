@@ -1,8 +1,11 @@
 const { githubController } = require("../modules/dbConnecter");
 const { GraphQLClient } = require("graphql-request");
 const { GITHUB_TOKEN } = require("../config.json");
+const { Client, GatewayIntentBits, parseResponse } = require("discord.js");
+const { token } = require("../config.json");
+const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
-async function main(github_username, userId, channelId, client) {
+async function main(github_username, userId, guildId, channelId, client) {
   const today = new Date().toISOString().slice(0, 10);
 
   const graphQLClient = new GraphQLClient("https://api.github.com/graphql", {
@@ -38,8 +41,9 @@ async function main(github_username, userId, channelId, client) {
     const todayContributions = contributions.find((day) => day.date === today);
     if (todayContributions && todayContributions.contributionCount === 0) {
       try {
-        client.channels.cache
-          .get(channelId)
+        client.guilds.cache
+          .get(guildId)
+          .channels.cache.get(channelId)
           .send(`<@${userId}>님, 1일 1커밋이 아직 이루어지지 않았어요`);
       } catch (error) {
         console.error("Error:", error.message);
@@ -49,7 +53,24 @@ async function main(github_username, userId, channelId, client) {
     console.error("Error:", error.message);
   }
 }
+(async () => {
+  try {
+    const documents = await githubController.find({}).exec();
 
-if (require.main === module) {
-  main();
-}
+    for (const document of documents) {
+      await main(
+        document["githubId"],
+        document["userId"],
+        document["guildId"],
+        document["channelId"],
+        client
+      );
+    }
+  } catch (error) {
+    console.error("에러 발생:", error);
+  } finally {
+    return;
+  }
+})();
+
+client.login(token);
