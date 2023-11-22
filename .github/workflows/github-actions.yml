@@ -28,6 +28,9 @@ jobs:
       - name: Install dependencies
         run: npm i
 
+      - name: Install pm2
+        run: npm i -g pm2
+
       - name: Create config.json
         run: |
           echo '{
@@ -40,4 +43,4 @@ jobs:
           }' > config.json
 
       - name: Run bot
-        run: node main
+        run: pm2 start main.js --watch -i max
