@@ -8,10 +8,6 @@ on:
     branches-ignore:
       - "release"
 
-defaults:
-  run:
-    working-directory: ./discord-bot
-
 jobs:
   node_CI:
     runs-on: ubuntu-latest
