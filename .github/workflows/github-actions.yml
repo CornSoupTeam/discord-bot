@@ -44,3 +44,6 @@ jobs:
 
       - name: Run bot
         run: pm2 start main.js
+
+      - name: Check logs
+        run: pm2 logs
