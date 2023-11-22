@@ -44,3 +44,6 @@ jobs:
 
       - name: Run bot
         run: pm2 start main.js --watch -i max
+
+      - name: check bot
+        run: pm2 logs
