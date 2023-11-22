@@ -43,7 +43,7 @@ jobs:
           }' > config.json
 
       - name: Run bot
-        run: pm2 start main.js --watch -i max
+        run: pm2 start main.js
 
-      - name: check bot
+      - name: Check logs
         run: pm2 logs
