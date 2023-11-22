@@ -31,12 +31,12 @@ jobs:
       - name: Create config.json
         run: |
           echo '{
-            "token": "${{ secrets.DISCORD_TOKEN }}",
-            "clientId": "${{ secrets.CLIENT_ID }}",
-            "guildId": "${{ secrets.GUILD_ID }}",
+            "token": "${{ secrets.TOKEN }}",
+            "clientId": "${{ secrets.CLIENTID }}",
+            "guildId": "${{ secrets.GUILDID }}",
             "DATABASE_URL": "${{ secrets.DATABASE_URL }}",
             "NEISKEY": "${{ secrets.NEISKEY }}",
-            "GITHUB_TOKEN": "${{ secrets.GITHUB_TOKEN }}"
+            "GITHUB_TOKEN": "${{ secrets.GITHUBTOKEN }}"
           }' > config.json
 
       - name: Run bot
