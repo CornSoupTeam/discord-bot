@@ -18,5 +18,8 @@ const rest = new REST({ version: "9" }).setToken(token);
 
 rest
   .put(Routes.applicationCommands(clientId), { body: commands })
-  .then(() => console.log("✔️ | 명령어 등록 완료!"))
+  .then(() => {
+    console.log("✔️ | 명령어 등록 완료!");
+    process.exit(0); // Exit the script after successful registration
+  })
   .catch(console.error);
