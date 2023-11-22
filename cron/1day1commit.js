@@ -74,3 +74,27 @@ async function main(github_username, userId, guildId, channelId, client) {
 })();
 
 client.login(token);
+
+client.once("ready", () => {
+  (async () => {
+    try {
+      const documents = await githubController.find({}).exec();
+
+      for (const document of documents) {
+        await main(
+          document["githubId"],
+          document["userId"],
+          document["guildId"],
+          document["channelId"],
+          client
+        );
+      }
+    } catch (error) {
+      console.error("에러 발생:", error);
+    } finally {
+      return;
+    }
+  })();
+  console.log("✔️ | 메시지 전송이 완료되었습니다.");
+  process.exit();
+});
