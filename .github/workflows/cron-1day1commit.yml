@@ -1,0 +1,35 @@
+name: 1day1commit-bot-cron
+
+on:
+  schedule:
+    - cron: "* * * * *" # 매 분(테스트용)
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Create config.json
+        run: |
+          echo '{
+            "token": "${{ secrets.TOKEN }}",
+            "clientId": "${{ secrets.CLIENTID }}",
+            "guildId": "${{ secrets.GUILDID }}",
+            "DATABASE_URL": "${{ secrets.DATABASE_URL }}",
+            "NEISKEY": "${{ secrets.NEISKEY }}",
+            "GITHUB_TOKEN": "${{ secrets.GITHUBTOKEN }}"
+          }' > config.json
+
+      - name: Run Script
+        run: node cron/1day1commit.js

@@ -45,7 +45,7 @@ module.exports = {
             `${data["mealServiceDietInfo"][1]["row"][0]["SCHUL_NM"]}의 오늘의 급식입니다.`
           )
           .addFields(mealFields);
-        interaction.reply({ embeds: [textEmbed] });
+        await interaction.reply({ embeds: [textEmbed] });
       } else {
         await interaction.reply(
           "급식 정보가 없습니다. 급식이 없는 날이거나, 급식 정보가 등록되지 않았습니다."
