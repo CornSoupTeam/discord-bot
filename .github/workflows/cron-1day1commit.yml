@@ -2,7 +2,7 @@ name: cron-1day1commit
 
 on:
   schedule:
-    - cron: "* * * * *"
+    - cron: "0 21 * * *"
 
 jobs:
   node_CI:
