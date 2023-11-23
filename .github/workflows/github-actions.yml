@@ -31,6 +31,8 @@ jobs:
 
       - name: Build Docker Image
         run: |
+          docker buildx create --use
+          docker buildx inspect --bootstrap
           docker buildx build --platform linux/arm64 \
             --network driver-opt network=my-bridge-network \
             --build-arg TOKEN=$TOKEN \
@@ -39,7 +41,6 @@ jobs:
             --build-arg DATABASE_URL=$DATABASE_URL \
             --build-arg NEISKEY=$NEISKEY \
             --build-arg GITHUBTOKEN=$GITHUBTOKEN \
-            --cache-from=pulled-image:tag \
             -t corn-bot:latest .
 
       - name: Run Locally
