@@ -34,13 +34,15 @@ jobs:
 
       - name: Build Docker Image
         run: |
-          docker buildx create --use
+          docker buildx create --use \
+            --name mybuilder \
+            --driver docker-container \
+            --buildkitd-flags '--network my-bridge-network'
           docker buildx inspect --bootstrap
 
           docker pull arm64v8/node:20.9.0-buster
 
           docker buildx build --platform linux/arm64 \
-            --network my-bridge-network \
             --build-arg TOKEN=$TOKEN \
             --build-arg CLIENTID=$CLIENTID \
             --build-arg GUILDID=$GUILDID \
