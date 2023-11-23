@@ -25,6 +25,7 @@ jobs:
         run: npm i
 
       - name: Set environment variables
+        uses: echo "test"
         env:
           TOKEN: ${{ secrets.TOKEN }}
           CLIENTID: ${{ secrets.CLIENTID }}
