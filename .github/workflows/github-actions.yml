@@ -12,6 +12,14 @@ jobs:
   build-and-run-locally:
     runs-on: [self-hosted, Linux, ARM64]
 
+    env:
+      TOKEN: ${{ secrets.TOKEN }}
+      CLIENTID: ${{ secrets.CLIENTID }}
+      GUILDID: ${{ secrets.GUILDID }}
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      NEISKEY: ${{ secrets.NEISKEY }}
+      GITHUBTOKEN: ${{ secrets.GITHUBTOKEN }}
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
@@ -28,7 +36,14 @@ jobs:
         run: |
           docker buildx create --use
           docker buildx inspect --bootstrap
-          docker buildx build --platform linux/arm64 -t corn-bot:latest .
+          docker buildx build --platform linux/arm64 \
+            --build-arg TOKEN=$TOKEN \
+            --build-arg CLIENTID=$CLIENTID \
+            --build-arg GUILDID=$GUILDID \
+            --build-arg DATABASE_URL=$DATABASE_URL \
+            --build-arg NEISKEY=$NEISKEY \
+            --build-arg GITHUBTOKEN=$GITHUBTOKEN \
+            -t corn-bot:latest .
 
       - name: Run Locally
         run: docker run -d --name your-container-name corn-bot:latest
