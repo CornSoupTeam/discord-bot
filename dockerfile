@@ -1,4 +1,4 @@
-FROM arm64v8/node:lts-alpine3.18d
+FROM arm64v8/node:lts-alpine3.18
 
 ARG TOKEN
 ARG CLIENTID
