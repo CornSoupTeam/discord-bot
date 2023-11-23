@@ -42,7 +42,8 @@ jobs:
             --build-arg NEISKEY=$NEISKEY \
             --build-arg GITHUBTOKEN=$GITHUBTOKEN \
             --build-arg NETWORK=my-bridge-network \
+            --output type=local,dest=. \
             -t corn-bot:latest .
 
       - name: Run Locally
-        run: docker run -d --name your-container-name corn-bot:latest
+        run: docker run -d --name your-container-name --network my-bridge-network corn-bot:latest
