@@ -25,13 +25,13 @@ jobs:
         run: npm i
 
       - name: Set environment variables
-        env:
-          TOKEN: ${{ secrets.TOKEN }}
-          CLIENTID: ${{ secrets.CLIENTID }}
-          GUILDID: ${{ secrets.GUILDID }}
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          NEISKEY: ${{ secrets.NEISKEY }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "TOKEN=${{ secrets.TOKEN }}" >> $GITHUB_ENV
+          echo "CLIENTID=${{ secrets.CLIENTID }}" >> $GITHUB_ENV
+          echo "GUILDID=${{ secrets.GUILDID }}" >> $GITHUB_ENV
+          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> $GITHUB_ENV
+          echo "NEISKEY=${{ secrets.NEISKEY }}" >> $GITHUB_ENV
+          echo "GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}" >> $GITHUB_ENV
 
       - name: Run Script
         run: node cron/1day1commit.js
