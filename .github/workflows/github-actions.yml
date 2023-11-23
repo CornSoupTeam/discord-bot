@@ -1,4 +1,4 @@
-name: Bot CI
+name: Bot docker based CI
 
 on:
   push:
@@ -12,38 +12,18 @@ jobs:
   node_CI:
     runs-on: [self-hosted, Linux, ARM64]
 
-    strategy:
-      matrix:
-        node-version: [20.x]
-
     steps:
-      - name: Checkout source code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
+      - name: Run Container
+        run: docker compose up -d --build
+        env:
+          TOKEN: ${{ secrets.TOKEN }}
+          CLIENTID: ${{ secrets.CLIENTID }}
+          GUILDID: ${{ secrets.GUILDID }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          NEISKEY: ${{ secrets.NEISKEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Install dependencies
-        run: npm i
-
-      - name: Install pm2
-        run: npm i -g pm2
-
-      - name: Create config.json
-        run: |
-          echo '{
-            "token": "${{ secrets.TOKEN }}",
-            "clientId": "${{ secrets.CLIENTID }}",
-            "guildId": "${{ secrets.GUILDID }}",
-            "DATABASE_URL": "${{ secrets.DATABASE_URL }}",
-            "NEISKEY": "${{ secrets.NEISKEY }}",
-            "GITHUB_TOKEN": "${{ secrets.GITHUBTOKEN }}"
-          }' > config.json
-
-      - name: command deploy
-        run: node register-command.js
-
-      - name: Run bot
-        run: pm2 start main.js
+      - name: Cleanup Unused Images
+        run: docker image prune -f

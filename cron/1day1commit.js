@@ -2,7 +2,7 @@ const { githubController } = require("../modules/dbConnecter");
 const { GraphQLClient } = require("graphql-request");
 const { GITHUB_TOKEN } = require("../config.json");
 const { Client, GatewayIntentBits } = require("discord.js");
-const { token } = require("../config.json");
+const { token } = require("../config");
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 async function main(github_username, userId, guildId, channelId, client) {

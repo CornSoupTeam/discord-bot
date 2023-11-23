@@ -24,16 +24,14 @@ jobs:
       - name: Install Dependencies
         run: npm i
 
-      - name: Create config.json
-        run: |
-          echo '{
-            "token": "${{ secrets.TOKEN }}",
-            "clientId": "${{ secrets.CLIENTID }}",
-            "guildId": "${{ secrets.GUILDID }}",
-            "DATABASE_URL": "${{ secrets.DATABASE_URL }}",
-            "NEISKEY": "${{ secrets.NEISKEY }}",
-            "GITHUB_TOKEN": "${{ secrets.GITHUBTOKEN }}"
-          }' > config.json
+      - name: Set environment variables
+        env:
+          TOKEN: ${{ secrets.TOKEN }}
+          CLIENTID: ${{ secrets.CLIENTID }}
+          GUILDID: ${{ secrets.GUILDID }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          NEISKEY: ${{ secrets.NEISKEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run Script
         run: node cron/1day1commit.js

@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require("discord.js");
-const { NEISKEY } = require("../config.json");
+const { NEISKEY } = require("../config");
 const { userController } = require("../modules/dbConnecter");
 
 module.exports = {
