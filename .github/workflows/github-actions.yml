@@ -1,29 +1,31 @@
-name: Bot docker based CI
+name: Build and Run Locally
 
 on:
   push:
-    branches-ignore:
-      - "release"
-  pull_request:
-    branches-ignore:
-      - "release"
+    branches:
+      - main
 
 jobs:
-  node_CI:
+  build-and-run-locally:
     runs-on: [self-hosted, Linux, ARM64]
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout Repository
+        uses: actions/checkout@v2
 
-      - name: Run Container
-        run: docker compose up -d --build
-        env:
-          TOKEN: ${{ secrets.TOKEN }}
-          CLIENTID: ${{ secrets.CLIENTID }}
-          GUILDID: ${{ secrets.GUILDID }}
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          NEISKEY: ${{ secrets.NEISKEY }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20.9.0"
 
-      - name: Cleanup Unused Images
-        run: docker image prune -f
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build Docker Image
+        run: |
+          docker buildx create --use
+          docker buildx inspect --bootstrap
+          docker buildx build --platform linux/arm64 -t corn-bot:latest .
+
+      - name: Run Locally
+        run: docker run -d --name your-container-name corn-bot:latest
