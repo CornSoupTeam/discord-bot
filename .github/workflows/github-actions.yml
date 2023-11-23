@@ -34,10 +34,7 @@ jobs:
 
       - name: Build Docker Image
         run: |
-          docker buildx create --use \
-            --name mybuilder \
-            --driver docker-container \
-            --buildkitd-flags '--network my-bridge-network'
+          docker buildx create --use
           docker buildx inspect --bootstrap
 
           docker pull arm64v8/node:20.9.0-buster
