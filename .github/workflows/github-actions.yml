@@ -49,6 +49,7 @@ jobs:
             --build-arg GITHUBTOKEN=$GITHUBTOKEN \
             --build-arg NETWORK=my-bridge-network \
             --load \
+            --rm	\
             -t corn-bot:latest .
 
       - name: Run Locally
