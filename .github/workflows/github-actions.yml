@@ -2,8 +2,11 @@ name: Build and Run Locally
 
 on:
   push:
-    branches:
-      - main
+    branches-ignore:
+      - "release"
+  pull_request:
+    branches-ignore:
+      - "release"
 
 jobs:
   build-and-run-locally:
