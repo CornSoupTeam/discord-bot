@@ -33,14 +33,15 @@ jobs:
         run: |
           docker buildx create --use
           docker buildx inspect --bootstrap
-          docker buildx build --platform linux/arm64 \
-            --network driver-opt network=my-bridge-network \
+          docker buildx build \
+            --platform linux/arm64 \
             --build-arg TOKEN=$TOKEN \
             --build-arg CLIENTID=$CLIENTID \
             --build-arg GUILDID=$GUILDID \
             --build-arg DATABASE_URL=$DATABASE_URL \
             --build-arg NEISKEY=$NEISKEY \
             --build-arg GITHUBTOKEN=$GITHUBTOKEN \
+            --build-arg NETWORK=my-bridge-network \
             -t corn-bot:latest .
 
       - name: Run Locally
