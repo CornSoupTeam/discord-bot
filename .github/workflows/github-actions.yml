@@ -40,7 +40,6 @@ jobs:
           docker pull arm64v8/node:20.9.0-buster
 
           docker buildx build --platform linux/arm64 \
-            --network=host \
             --build-arg TOKEN=$TOKEN \
             --build-arg CLIENTID=$CLIENTID \
             --build-arg GUILDID=$GUILDID \
