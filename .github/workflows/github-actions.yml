@@ -32,7 +32,7 @@ jobs:
       - name: Build Docker Image
         run: |
           docker build --platform linux/arm64 \
-            --network=host \
+            --network=my-bridge-network \
             --build-arg TOKEN=$TOKEN \
             --build-arg CLIENTID=$CLIENTID \
             --build-arg GUILDID=$GUILDID \
