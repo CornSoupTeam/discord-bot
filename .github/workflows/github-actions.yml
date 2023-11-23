@@ -29,6 +29,12 @@ jobs:
         with:
           node-version: "20.9.0"
 
+      - name: Remove existing container and image
+        run: |
+          docker stop corn-bot || true
+          docker rm corn-bot || true
+          docker image rm corn-bot:latest || true
+
       - name: Build Docker Image
         run: |
           docker buildx create --use
