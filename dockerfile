@@ -1,4 +1,4 @@
-FROM arm64v8/node:20.9.0
+FROM arm64v8/node:20.9.0-buster
 
 ARG TOKEN
 ARG CLIENTID
