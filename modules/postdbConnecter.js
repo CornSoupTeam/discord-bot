@@ -7,11 +7,11 @@ const {
 } = require("../config");
 
 const client = new Client({
-  user: DB_USER,
+  user: DATABASE_USER,
   host: DATABASE_URL,
   database: "maindb",
-  password: DB_PASSWORD,
-  port: DB_PORT,
+  password: DATABASE_PASSWORD,
+  port: DATABASE_PORT,
 });
 
 const connect = () => {
