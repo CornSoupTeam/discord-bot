@@ -1,5 +1,10 @@
 const { Client } = require("pg");
-const { DATABASE_URL, DB_USER, DB_PASSWORD, DB_PORT } = require("../config");
+const {
+  DATABASE_URL,
+  DATABASE_USER,
+  DATABASE_PASSWORD,
+  DATABASE_PORT,
+} = require("../config");
 
 const client = new Client({
   user: DB_USER,
