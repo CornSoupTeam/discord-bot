@@ -13,7 +13,7 @@ module.exports = {
       `SELECT * FROM server WHERE id = ${interaction.guild.id}`
     );
 
-    if (userinfo == undefined) {
+    if (userinfo.rows.length === 0) {
       const query = {
         text: "INSERT INTO member(id, point, createdat, level, state, exp) VALUES($1, $2, $3, $4. $5, $6)",
         values: [interaction.user.id, 1, new Date(), 1, True, 1],
@@ -21,7 +21,7 @@ module.exports = {
       userinfo = await executeQuery(query);
     }
 
-    if (serverinfo == undefined) {
+    if (serverinfo.rows.length === 0) {
       const query = {
         text: "INSERT INTO server(id, currencyUnit) VALUES($1, $2)",
         values: [interaction.guild.id, "원"],
