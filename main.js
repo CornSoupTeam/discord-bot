@@ -1,7 +1,7 @@
 const { Client, Collection, GatewayIntentBits } = require("discord.js");
 const { token } = require("./config");
 const fs = require("fs");
-
+const { connect } = require("./modules/postdbConnecter");
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 client.commands = new Collection();
@@ -16,6 +16,7 @@ for (const file of commandFiles) {
 
 client.once("ready", () => {
   console.log("시스템 | 정상적으로 로그인 되었습니다.");
+  connect();
 });
 
 client.on("interactionCreate", async (interaction) => {

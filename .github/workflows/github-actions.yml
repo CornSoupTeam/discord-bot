@@ -15,7 +15,6 @@ jobs:
     env:
       TOKEN: ${{ secrets.TOKEN }}
       CLIENTID: ${{ secrets.CLIENTID }}
-      GUILDID: ${{ secrets.GUILDID }}
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
       NEISKEY: ${{ secrets.NEISKEY }}
       GITHUBTOKEN: ${{ secrets.GITHUBTOKEN }}
@@ -44,7 +43,6 @@ jobs:
             --platform linux/arm64 \
             --build-arg TOKEN=$TOKEN \
             --build-arg CLIENTID=$CLIENTID \
-            --build-arg GUILDID=$GUILDID \
             --build-arg DATABASE_URL=$DATABASE_URL \
             --build-arg NEISKEY=$NEISKEY \
             --build-arg GITHUBTOKEN=$GITHUBTOKEN \
