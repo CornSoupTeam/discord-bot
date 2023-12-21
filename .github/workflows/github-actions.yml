@@ -16,7 +16,9 @@ jobs:
       TOKEN: ${{ secrets.TOKEN }}
       CLIENTID: ${{ secrets.CLIENTID }}
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
-      NEISKEY: ${{ secrets.NEISKEY }}
+      DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+      DATABASE_PORT: ${{ secrets.DATABASE_PORT }}
+      DATABASE_USER: ${{ secrets.DATABASE_USER }}
       GITHUBTOKEN: ${{ secrets.GITHUBTOKEN }}
 
     steps:
@@ -44,7 +46,6 @@ jobs:
             --build-arg TOKEN=$TOKEN \
             --build-arg CLIENTID=$CLIENTID \
             --build-arg DATABASE_URL=$DATABASE_URL \
-            --build-arg NEISKEY=$NEISKEY \
             --build-arg GITHUBTOKEN=$GITHUBTOKEN \
             --build-arg NETWORK=my-bridge-network \
             --load \
