@@ -4,7 +4,6 @@ const DATABASE_URL = process.env.DATABASE_URL;
 const DATABASE_USER = process.env.DATABASE_USER;
 const DATABASE_PASSWORD = process.env.DATABASE_PASSWORD;
 const DATABASE_PORT = process.env.DATABASE_PORT;
-const NEISKEY = process.env.NEISKEY;
 
 module.exports = {
   token,
@@ -13,5 +12,4 @@ module.exports = {
   DATABASE_USER,
   DATABASE_PASSWORD,
   DATABASE_PORT,
-  NEISKEY,
 };
