@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
-const { dbmoduler } = require("../modules/userdb");
+const { finduser } = require("../modules/userdb");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -12,10 +12,10 @@ module.exports = {
     ),
   async execute(interaction) {
     if (interaction.options.getUser("대상")) {
-      info = await dbmoduler(interaction, "other");
+      info = await finduser(interaction, "other");
       username = interaction.options.getUser("대상").username;
     } else {
-      info = await dbmoduler(interaction, "user");
+      info = await finduser(interaction, "user");
       username = interaction.user.username;
     }
     const textEmbed = new EmbedBuilder()
