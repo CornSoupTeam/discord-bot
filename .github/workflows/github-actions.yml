@@ -19,7 +19,6 @@ jobs:
       DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
       DATABASE_PORT: ${{ secrets.DATABASE_PORT }}
       DATABASE_USER: ${{ secrets.DATABASE_USER }}
-      GITHUBTOKEN: ${{ secrets.GITHUBTOKEN }}
 
     steps:
       - name: Checkout Repository
@@ -46,7 +45,9 @@ jobs:
             --build-arg TOKEN=$TOKEN \
             --build-arg CLIENTID=$CLIENTID \
             --build-arg DATABASE_URL=$DATABASE_URL \
-            --build-arg GITHUBTOKEN=$GITHUBTOKEN \
+            --build-arg DATABASE_PORT=$DATABASE_PORT \
+            --build-arg DATABASE_USER=$DATABASE_USER \
+            --build-arg DATABASE_PASSWORD=$DATABASE_PASSWORD \
             --build-arg NETWORK=my-bridge-network \
             --load \
             -t corn-bot:latest .
