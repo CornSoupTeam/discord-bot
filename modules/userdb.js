@@ -6,17 +6,27 @@ async function finduser(interaction, type) {
   } else {
     targetuser = interaction.options.getUser("대상").id;
   }
-  console.log();
   userinfo = await executeQuery(
-    `SELECT * FROM member WHERE id = ${targetuser} AND serverid = ${interaction.guild.id}`
+    `SELECT * FROM member WHERE userid = ${
+      targetuser.toString() + interaction.guild.id.toString()
+    }`
   );
   serverinfo = await executeQuery(
     `SELECT * FROM server WHERE id = ${interaction.guild.id}`
   );
   if (userinfo.length == []) {
     const query = {
-      text: "INSERT INTO member(id, point, createdat, level, state, exp, serverid) VALUES($1, $2, $3, $4, $5, $6, $7)",
-      values: [targetuser, 1, new Date(), 1, true, 1, interaction.guild.id],
+      text: "INSERT INTO member(id, point, createdat, level, state, exp, serverid, userid) VALUES($1, $2, $3, $4, $5, $6, $7, $8)",
+      values: [
+        targetuser,
+        1,
+        new Date(),
+        1,
+        true,
+        1,
+        interaction.guild.id,
+        targetuser.toString() + interaction.guild.id.toString(),
+      ],
     };
     await executeQuery(query);
     userinfo = [
@@ -53,20 +63,19 @@ async function transpoint(interaction) {
     return false;
   } else {
     const originquery = {
-      text: "UPDATE member SET point = $1 WHERE id = $2 AND serverid = $3",
+      text: "UPDATE member SET point = $1 WHERE userid = $2",
       values: [
         origininfo[0][0]["point"] - interaction.options.getInteger("포인트"),
-        interaction.user.id,
-        interaction.guild.id,
+        interaction.user.id.toString() + interaction.guild.id.toString(),
       ],
     };
     await executeQuery(originquery);
     const afterquery = {
-      text: "UPDATE member SET point = $1 WHERE id = $2 AND serverid = $3",
+      text: "UPDATE member SET point = $1 WHERE userid = $2",
       values: [
         targetinfo[0][0]["point"] + interaction.options.getInteger("포인트"),
-        interaction.options.getUser("대상").id,
-        interaction.guild.id,
+        interaction.options.getUser("대상").id.toString() +
+          interaction.guild.id.toString(),
       ],
     };
     await executeQuery(afterquery);
@@ -74,5 +83,25 @@ async function transpoint(interaction) {
   }
 }
 
+async function addpoint(interaction, point) {
+  origininfo = await finduser(interaction, "user");
+  console.log(origininfo[0][0]["point"] + point);
+  const query = {
+    text: "UPDATE member SET point = $1 WHERE userid = $2",
+    values: [
+      (origininfo[0][0]["point"] + point).toFixed(1),
+      interaction.user.id.toString() + interaction.guild.id.toString(),
+    ],
+  };
+  await executeQuery(query);
+}
+
+async function pointRanking(interaction) {
+  serverinfo = await executeQuery(
+    `SELECT * FROM server WHERE id = ${interaction.guild.id}`
+  );
+}
+
 module.exports.transpoint = transpoint;
 module.exports.finduser = finduser;
+module.exports.addpoint = addpoint;
