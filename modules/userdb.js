@@ -97,11 +97,14 @@ async function addpoint(interaction, point) {
 }
 
 async function pointRanking(interaction) {
-  serverinfo = await executeQuery(
-    `SELECT * FROM server WHERE id = ${interaction.guild.id}`
+  const serverinfo = await executeQuery(
+    `SELECT * FROM member WHERE serverid = ${interaction.guild.id} ORDER BY point DESC LIMIT 10`
   );
+  console.log(serverinfo);
+  return serverinfo;
 }
 
 module.exports.transpoint = transpoint;
 module.exports.finduser = finduser;
 module.exports.addpoint = addpoint;
+module.exports.pointRanking = pointRanking;
